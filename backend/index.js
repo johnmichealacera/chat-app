@@ -10,12 +10,23 @@ const io = new Server(httpServer, {
 })
 
 io.on('connection', socket => {
-    console.log(`User ${socket.id} connected`)
+    console.log(`User ${socket.id} connected`);
 
-    socket.on('message', data => {
-        console.log(data)
-        io.emit('message', `${socket.id.substring(0, 5)}: ${data}`)
-    })
-})
+    // Listen for when the user wants to join a private chat
+    socket.on('join-room', ({ roomId }) => {
+        socket.join(roomId);
+        console.log(`User ${socket.id} joined room ${roomId}`);
+    });
+
+    // Listen for messages sent to the room
+    socket.on('message', ({ roomId, message }) => {
+        console.log(`Message received in room ${roomId}: ${message}`);
+        io.to(roomId).emit('message', `${socket.id.substring(0, 5)}: ${message}`);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`User ${socket.id} disconnected`);
+    });
+});
 
 httpServer.listen(3500, () => console.log('listening on port 3500'))

@@ -13,11 +13,23 @@
 </head>
 
 <body>
-    <form>
-        <input type="text" placeholder="Your message">
-        <button>Send</button>
-    </form>
-    <ul></ul>
+    <!-- Page 1: Select who to message -->
+    <div id="user-selection">
+        <h2>Select a person to message:</h2>
+        <button onclick="selectPerson('joan')">Message Joan</button>
+        <button onclick="selectPerson('anna')">Message Anna</button>
+        <button onclick="selectPerson('jane')">Message Jane</button>
+    </div>
+
+    <!-- Page 2: Chat interface -->
+    <div id="chat-interface" style="display: none;">
+        <h2>Chat with <span id="chat-person"></span></h2>
+        <form>
+            <input type="text" placeholder="Your message">
+            <button>Send</button>
+        </form>
+        <ul></ul>
+    </div>
 </body>
 
 </html>
